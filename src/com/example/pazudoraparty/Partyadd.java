@@ -14,8 +14,6 @@ public class Partyadd extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.partyadd);
 
-        TextView txtView = (TextView)findViewById(R.id.textView1);
-        txtView.setText("置き換え後");
     }
 
 }
