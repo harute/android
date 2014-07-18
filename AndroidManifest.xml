@@ -26,6 +26,10 @@
             android:name=".Partyadd"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".PartySearch"
+            android:label="@string/title_activity_party_search" >
+        </activity>
     </application>
 
 </manifest>
