@@ -10,10 +10,13 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 
 public class PartySearch extends Activity implements OnQueryTextListener {
-    private String[] array_adapter_data = { "Apple", "Bike", "Cupcake",
-            "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb" };
+    private String[] array_adapter_data = { "Apple", "AAvvl", "Bike", "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb" };
+    private String[] sub_array_adapter_data = { "sub01", "sub02", "sub03", "sub04", "sub05", "sub06", "sub07", "sub08", "sub09" };
+    DatabaseHelper helper = new DatabaseHelper(this);
+    //array_adapter_data = dh.getMonthList();
 
     private ListView list;
+    ArrayAdapter<String> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,7 @@ public class PartySearch extends Activity implements OnQueryTextListener {
         Log.v("Tag", "onCreate");
         SearchView search = (SearchView) findViewById(R.id.searchView1);
         list = (ListView) findViewById(R.id.listView1);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, array_adapter_data);
         list.setAdapter(adapter);
         list.setTextFilterEnabled(true);
@@ -50,9 +53,12 @@ public class PartySearch extends Activity implements OnQueryTextListener {
     public boolean onQueryTextChange(String newText) {
         //Log.d("Tag", "onQueryTextChange");
         if (TextUtils.isEmpty(newText)) {
-            list.clearTextFilter();
+            //list.clearTextFilter();
+            adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, array_adapter_data);
+            list.setAdapter(adapter);
         } else {
-            list.setFilterText(newText.toString());
+            adapter.getFilter().filter(newText);
         }
         return true;
     }
