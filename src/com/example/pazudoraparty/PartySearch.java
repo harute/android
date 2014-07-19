@@ -3,6 +3,7 @@ package com.example.pazudoraparty;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -19,6 +20,7 @@ public class PartySearch extends Activity implements OnQueryTextListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_search);
 
+        Log.v("Tag", "onCreate");
         SearchView search = (SearchView) findViewById(R.id.searchView1);
         list = (ListView) findViewById(R.id.listView1);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -26,43 +28,27 @@ public class PartySearch extends Activity implements OnQueryTextListener {
         list.setAdapter(adapter);
         list.setTextFilterEnabled(true);
 
+        // Listner登録
+        search.setOnQueryTextListener(this);
+
         // SearchViewの初期表示状態を設定
         search.setIconifiedByDefault(false);
 
-        // SearchViewにOnQueryChangeListenerを設定
-        //search.setOnQueryChangeListener(this);
-
         // SearchViewのSubmitボタンを使用不可にする
-        search.setSubmitButtonEnabled(true);
+        search.setSubmitButtonEnabled(false);
 
         // SearchViewに何も入力していない時のテキストを設定
-        search.setQueryHint("検索文字を入力して下さい。");
-    }
-
-    // SearchViewにテキストを入力する度に呼ばれるイベント
-    public boolean onQueryTextChanged(String queryText) {
-        if (TextUtils.isEmpty(queryText)) {
-            list.clearTextFilter();
-        } else {
-            list.setFilterText(queryText.toString());
-        }
-        return true;
-    }
-
-    // SearchViewのSubmitButtonを押下した時に呼ばれるイベント
-    public boolean onSubmitQuery(String queryText) {
-        return false;
+        search.setQueryHint("検索文字を入力");
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        // TODO 自動生成されたメソッド・スタブ
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        // TODO 自動生成されたメソッド・スタブ
+        //Log.d("Tag", "onQueryTextChange");
         if (TextUtils.isEmpty(newText)) {
             list.clearTextFilter();
         } else {
