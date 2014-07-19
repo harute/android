@@ -6,7 +6,7 @@
                             android:id="@+id/searchView1"
         android:layout_height="wrap_content"></SearchView>
     <ListView android:id="@+id/listView1"
-                       android:layout_height="wrap_content"
-               android:layout_width="match_parent" android:layout_weight="1">
+              android:layout_height="wrap_content"
+              android:layout_width="match_parent" android:layout_weight="1">
     </ListView>
 </LinearLayout>

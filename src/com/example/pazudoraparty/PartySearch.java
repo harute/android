@@ -1,33 +1,43 @@
 package com.example.pazudoraparty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 
 public class PartySearch extends Activity implements OnQueryTextListener {
     private String[] array_adapter_data = { "Apple", "AAvvl", "Bike", "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb" };
-    private String[] sub_array_adapter_data = { "sub01", "sub02", "sub03", "sub04", "sub05", "sub06", "sub07", "sub08", "sub09" };
-    DatabaseHelper helper = new DatabaseHelper(this);
-    //array_adapter_data = dh.getMonthList();
 
     private ListView list;
-    ArrayAdapter<String> adapter;
+    ListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // ウィンドウタイトルバー非表示
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_party_search);
 
-        Log.v("Tag", "onCreate");
         SearchView search = (SearchView) findViewById(R.id.searchView1);
         list = (ListView) findViewById(R.id.listView1);
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, array_adapter_data);
+
+        // リストに表示するヤツらを作る
+        List<IconTextArrayItem> items = new ArrayList<IconTextArrayItem>();
+        items.add(new IconTextArrayItem(R.drawable.pazu_001, "Aa"));
+        items.add(new IconTextArrayItem(R.drawable.pazu_002, "Aaacccc"));
+        items.add(new IconTextArrayItem(R.drawable.pazu_003, "bddd"));
+        items.add(new IconTextArrayItem(R.drawable.pazu_004, "爆炎龍ティラノス"));
+
+        adapter = new IconTextArrayAdapter(this, R.layout.row, items);
         list.setAdapter(adapter);
         list.setTextFilterEnabled(true);
 
@@ -54,38 +64,11 @@ public class PartySearch extends Activity implements OnQueryTextListener {
         //Log.d("Tag", "onQueryTextChange");
         if (TextUtils.isEmpty(newText)) {
             //list.clearTextFilter();
-            adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, array_adapter_data);
-            list.setAdapter(adapter);
+            //adapter = new ArrayAdapter<String>(this, R.layout.row, R.id.row_textview1, array_adapter_data);
+            //list.setAdapter(adapter);
         } else {
-            adapter.getFilter().filter(newText);
+            //adapter.getFilter().filter(newText);
         }
         return true;
     }
-
-    /*private DatabaseHelper helper;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_party_search);
-
-        helper = new DatabaseHelper(this);
-        SQLiteDatabase db = helper.getReadableDatabase();
-        String sql = "select local_dish from local_dishes where prefecture = '北海道';";
-        Cursor c = db.rawQuery(sql, null);
-        //Cursor c = db.query("LOCAL_DISHES", new String[] {"prefecture"}, null, null, null, null, null);
-        c.moveToFirst();
-
-        CharSequence[] list = new CharSequence[c.getCount()];
-        for (int i = 0; i < list.length; i++) {
-            //list[i] = c.getString(0);
-            Log.v("Tag", c.getString(0));
-            c.moveToNext();
-        }
-        c.close();
-
-        //TextView txtView = (TextView)findViewById(R.id.txtView);
-        //txtView.setText(mon.monGet());
-    }*/
 }
