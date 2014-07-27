@@ -1,7 +1,10 @@
 package com.example.pazudoraparty;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +64,28 @@ public class IconTextArrayAdapter extends ArrayAdapter<IconTextArrayItem> {
 
         // アイコンにアレを設定
         ImageView imageView = (ImageView)view.findViewWithTag("icon");
-        imageView.setImageResource(item.getIconResource());
+
+
+     // 画像をDrawableで取得
+        String urlString="http://pazu-test.but.jp/image/001.png";
+        Drawable d;
+        try {
+          //URLクラス
+            URL url = new URL(urlString);
+            //入力ストリームを開く
+            InputStream istream = url.openStream();
+            //画像をDrawableで取得
+            d = Drawable.createFromStream(istream, "webimg");
+            imageView.setImageDrawable(d);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+
+
+
+
+        //imageView.setImageResource(item.getIconResource());
 
         // テキストにソレを設定
         TextView textView = (TextView)view.findViewWithTag("text");
