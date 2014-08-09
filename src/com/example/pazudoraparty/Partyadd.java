@@ -13,6 +13,7 @@ import com.example.pazudoraparty.Kakusei;
 import com.example.pazudoraparty.R;
 import com.example.pazudoraparty.Sample2;
 import com.example.pazudoraparty.StringResponseHandler;
+import com.example.pazudoraparty.Common;
 import com.google.gson.Gson;
 
 import android.app.Activity;
@@ -21,6 +22,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
@@ -33,9 +35,6 @@ public class Partyadd extends Activity {
 
     int width;
     int height;
-
-    static List<AppInfo> items = new ArrayList<AppInfo>();
-    static AppInfoArrayAdapter adapter;
 
     ListView listView1;
 
@@ -50,6 +49,14 @@ public class Partyadd extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.partyadd);
 
+        //sample
+        String no  ="";
+        Intent intent = getIntent();
+        if (intent != null) {
+            no = intent.getStringExtra("NO");
+            Log.d("Tag", no);
+        }
+
         getDisplay();
         setImageButton(R.id.imgbtn_id01, "001.png");
         setImageButton(R.id.imgbtn_id02, "002.png");
@@ -63,8 +70,9 @@ public class Partyadd extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Partyadd.this, PartySearch.class);
+                Intent intent = new Intent(getApplicationContext(), PartySearch.class);
                 // アクティビティ起動
+                //intent.putExtra("KEYWORD", "test");
                 startActivity(intent);
             }
         });
@@ -82,7 +90,8 @@ public class Partyadd extends Activity {
 
         // http処理
         Http.Request request = new Http.Request();
-        request.url = "https://but-pazu-test.ssl-lolipop.jp/skillSearch.php?leader[0]=1200&leader[1]=1201&member[0]=1234&member[1]=1235&member[2]=1236&member[3]=1236";
+        request.url = "https://but-pazu-test.ssl-lolipop.jp/skillSearch.php?leader[0]=" + no + "&leader[1]=1201&member[0]=1234&member[1]=1235&member[2]=1236&member[3]=1236";
+        Log.d("Tag", request.url);
 
         Http.Response response = Http.requestSync(request, StringResponseHandler.getInstance());
         Sample2 sample = new Sample2();
@@ -110,6 +119,7 @@ public class Partyadd extends Activity {
         // ここで繰り返し処理
         //入力ストリームを開く
         InputStream istream;
+        List<AppInfo> items = new ArrayList<AppInfo>();
         try {
             for (int i = 0; i < cnt; i++) {
                 URL url = new URL(arrtest[i].get(1));
@@ -126,7 +136,7 @@ public class Partyadd extends Activity {
         }
 
         //adapter = new AppInfoArrayAdapter(this, R.layout.raw, R.id.row_textview1, items);
-        adapter = new AppInfoArrayAdapter(this, R.layout.raw, items);
+        AppInfoArrayAdapter adapter = new AppInfoArrayAdapter(this, R.layout.raw, items);
         listView1.setAdapter(adapter);
 
     }

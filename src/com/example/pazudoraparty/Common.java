@@ -11,4 +11,12 @@ public class Common {
         ret += star;
         return ret;
     }
+
+    public static boolean isEmpty(String value) {
+        if ( value == null || value.length() == 0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

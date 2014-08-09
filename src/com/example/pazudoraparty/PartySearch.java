@@ -10,15 +10,20 @@ import com.google.gson.Gson;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 public class PartySearch extends Activity implements TextWatcher {
     private Map<String, String> data;
@@ -89,6 +94,25 @@ public class PartySearch extends Activity implements TextWatcher {
 
             // アダプタを設定します。
             listView.setAdapter(adapter2);
+
+          //クリック処理
+            listView.setOnItemClickListener(new OnItemClickListener() {
+                @SuppressWarnings("unchecked")
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ListView list = (ListView)parent;
+                    data = new HashMap<String, String>();
+                    data = (Map<String, String>) list.getItemAtPosition(position);
+                    String ret = data.get("no").replaceAll("[^0-9]","");
+                    //Log.d("Tag", String.valueOf(ret));
+
+                    // PartyAddに戻る
+                    Intent intent = new Intent(getApplicationContext(), Partyadd.class);
+                    // アクティビティ起動
+                    intent.putExtra("NO", ret);
+                    startActivity(intent);
+                }
+            });
         }
     }
 
