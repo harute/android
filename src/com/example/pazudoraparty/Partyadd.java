@@ -49,13 +49,8 @@ public class Partyadd extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.partyadd);
 
-        //sample
-        String no  ="";
-        Intent intent = getIntent();
-        if (intent != null) {
-            no = intent.getStringExtra("NO");
-            Log.d("Tag", no);
-        }
+        // Intent受け取り値を収納
+        String[] noArr = getIntentValueNo();
 
         getDisplay();
         setImageButton(R.id.imgbtn_id01, "001.png");
@@ -90,7 +85,12 @@ public class Partyadd extends Activity {
 
         // http処理
         Http.Request request = new Http.Request();
-        request.url = "https://but-pazu-test.ssl-lolipop.jp/skillSearch.php?leader[0]=" + no + "&leader[1]=1201&member[0]=1234&member[1]=1235&member[2]=1236&member[3]=1236";
+        request.url = "https://but-pazu-test.ssl-lolipop.jp/skillSearch.php?leader[0]=" + noArr[0] +
+                      "&leader[1]=" + noArr[1] +
+                      "&member[0]=" + noArr[2] +
+                      "&member[1]=" + noArr[3] +
+                      "&member[2]=" + noArr[4] +
+                      "&member[3]=" + noArr[5];
         Log.d("Tag", request.url);
 
         Http.Response response = Http.requestSync(request, StringResponseHandler.getInstance());
@@ -104,16 +104,19 @@ public class Partyadd extends Activity {
         @SuppressWarnings("unchecked")
         ArrayList<String>[] arrtest = new ArrayList[50];
         arrtest[0] = new ArrayList<String>();
-        arrtest[0].add(sample.ls_desc.split(",")[0] + "\n" + sample.ls_desc.split(",")[1]);
+        //arrtest[0].add(sample.ls_desc.split(",")[0] + "\n" + sample.ls_desc.split(",")[1]);
+        arrtest[0].add(getLsDesc(sample));
         arrtest[0].add("http://pazu-test.but.jp/image/004.png");
 
         // 覚醒
         int cnt = 1;
-        for (Kakusei kakuraw : sample.kakusei) {
-            arrtest[cnt] = new ArrayList<String>();
-            arrtest[cnt].add(kakuraw.desc);
-            arrtest[cnt].add(kakuraw.url);
-            cnt++;
+        if (sample.kakusei != null) {
+            for (Kakusei kakuraw : sample.kakusei) {
+                arrtest[cnt] = new ArrayList<String>();
+                arrtest[cnt].add(kakuraw.desc);
+                arrtest[cnt].add(kakuraw.url);
+                cnt++;
+            }
         }
 
         // ここで繰り返し処理
@@ -139,6 +142,43 @@ public class Partyadd extends Activity {
         AppInfoArrayAdapter adapter = new AppInfoArrayAdapter(this, R.layout.raw, items);
         listView1.setAdapter(adapter);
 
+    }
+
+    // リーダスキルの文字列を生成
+    private String getLsDesc(Sample2 sample) {
+        String rst;
+        String[] arr = sample.ls_desc.split(",",0);
+        if (arr.length == 0) {
+            rst = "なし";
+        } else if (arr.length == 1) {
+            rst = arr[0];
+        } else {
+            rst = arr[0] + "\n" + arr[1];
+        }
+        //rst = sample.ls_desc.split(",")[0] + "\n" + sample.ls_desc.split(",")[1];
+        return rst;
+    }
+
+    /* Intent[NO]からNo配列の生成して返却する */
+    private String[] getIntentValueNo() {
+        String no;
+        String[] noArr  = {};
+        Intent intent = getIntent();
+        if (intent != null) {
+            no = intent.getStringExtra("NO");
+            noArr = no.split(",", 0);
+            // 不足している場合は0埋め
+            if (noArr.length < 6) {
+                for (int i = 6 - noArr.length; i < noArr.length; i++) {
+                    noArr[i] = "0";
+                }
+            }
+        } else {
+            String tmp = "0,0,0,0,0,0";
+            noArr = tmp.split(",", 0);
+        }
+
+        return noArr;
     }
 
     private void setImageButton(int imgbtnId, String fileName) {

@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Partyadd.class);
                 // アクティビティ起動
-                intent.putExtra("NO", "1000");
+                intent.putExtra("NO", "0,0,0,0,0,0");
                 startActivity(intent);
             }
         });

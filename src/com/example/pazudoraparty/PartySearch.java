@@ -109,7 +109,7 @@ public class PartySearch extends Activity implements TextWatcher {
                     // PartyAddに戻る
                     Intent intent = new Intent(getApplicationContext(), Partyadd.class);
                     // アクティビティ起動
-                    intent.putExtra("NO", ret);
+                    intent.putExtra("NO", ret + ",0,0,0,0,0");
                     startActivity(intent);
                 }
             });
