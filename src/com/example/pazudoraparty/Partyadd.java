@@ -16,6 +16,7 @@ import com.example.pazudoraparty.StringResponseHandler;
 import com.example.pazudoraparty.Common;
 import com.google.gson.Gson;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
@@ -51,6 +52,7 @@ public class Partyadd extends Activity {
 
         // Intent受け取り値を収納
         String[] noArr = getIntentValueNo();
+        String[] imageStr = getImageFilePathArr(noArr);
 
         getDisplay();
         /*
@@ -61,12 +63,12 @@ public class Partyadd extends Activity {
         setImageButton(R.id.imgbtn_id05, "002.png");
         setImageButton(R.id.imgbtn_id06, "002.png");
         */
-        setImageButton(R.id.imgbtn_id01);
-        setImageButton(R.id.imgbtn_id02);
-        setImageButton(R.id.imgbtn_id03);
-        setImageButton(R.id.imgbtn_id04);
-        setImageButton(R.id.imgbtn_id05);
-        setImageButton(R.id.imgbtn_id06);
+        setImageButton(R.id.imgbtn_id01, imageStr[0]);
+        setImageButton(R.id.imgbtn_id02, imageStr[1]);
+        setImageButton(R.id.imgbtn_id03, imageStr[2]);
+        setImageButton(R.id.imgbtn_id04, imageStr[3]);
+        setImageButton(R.id.imgbtn_id05, imageStr[4]);
+        setImageButton(R.id.imgbtn_id06, imageStr[5]);
 
         // ボタン押下時に画面遷移 sample
         ImageButton btn01 = (ImageButton)findViewById(R.id.imgbtn_id01);
@@ -213,6 +215,24 @@ public class Partyadd extends Activity {
         AppInfoArrayAdapter adapter = new AppInfoArrayAdapter(this, R.layout.raw, items);
         listView1.setAdapter(adapter);
 
+    }
+
+    private String[] getImageFilePathArr(String[] noArr) {
+        String[] rst = new String[6];
+        int i = 0;
+        for (String param : noArr) {
+            int p = Integer.parseInt(param);
+            Log.d("Tag", String.valueOf(p));
+            if (p <= 0) {
+                rst[i] = "noimage";
+            } else if (p >= 1000) {
+                rst[i] = param + ".png";
+            } else {
+                rst[i] = String.format("%1$03d", p) + ".png";
+            }
+            i++;
+        }
+        return rst;
     }
 
     // リーダスキルの文字列を生成
