@@ -40,6 +40,13 @@ public class PartySearch extends Activity implements TextWatcher {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_party_search);
 
+        // Intent連携から対象のボタンNOを取得する
+        Intent intent = getIntent();
+        final String beforeIntentNo = intent.getStringExtra("NO");
+        final String beforeIntentBtnNo = intent.getStringExtra("BTNNO");
+        Log.d("Tag", "No:" + beforeIntentNo);
+        Log.d("Tag", "Button-No:" + beforeIntentBtnNo);
+
         // リスナーを仕込むエディットボックス
         this.mEditText = (EditText)findViewById(R.id.editText1);
         mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -109,7 +116,9 @@ public class PartySearch extends Activity implements TextWatcher {
                     // PartyAddに戻る
                     Intent intent = new Intent(getApplicationContext(), Partyadd.class);
                     // アクティビティ起動
-                    intent.putExtra("NO", ret + ",0,0,0,0,0");
+                    String res = "";
+                    res = Common.getMergeNO(beforeIntentNo, beforeIntentBtnNo, ret);
+                    intent.putExtra("NO", res);
                     startActivity(intent);
                 }
             });

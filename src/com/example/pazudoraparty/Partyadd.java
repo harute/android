@@ -53,30 +53,95 @@ public class Partyadd extends Activity {
         String[] noArr = getIntentValueNo();
 
         getDisplay();
+        /*
         setImageButton(R.id.imgbtn_id01, "001.png");
         setImageButton(R.id.imgbtn_id02, "002.png");
         setImageButton(R.id.imgbtn_id03, "003.png");
         setImageButton(R.id.imgbtn_id04, "004.png");
         setImageButton(R.id.imgbtn_id05, "002.png");
         setImageButton(R.id.imgbtn_id06, "002.png");
+        */
+        setImageButton(R.id.imgbtn_id01);
+        setImageButton(R.id.imgbtn_id02);
+        setImageButton(R.id.imgbtn_id03);
+        setImageButton(R.id.imgbtn_id04);
+        setImageButton(R.id.imgbtn_id05);
+        setImageButton(R.id.imgbtn_id06);
 
         // ボタン押下時に画面遷移 sample
-        ImageButton btn = (ImageButton)findViewById(R.id.imgbtn_id01);
-        btn.setOnClickListener(new View.OnClickListener() {
+        ImageButton btn01 = (ImageButton)findViewById(R.id.imgbtn_id01);
+        ImageButton btn02 = (ImageButton)findViewById(R.id.imgbtn_id02);
+        ImageButton btn03 = (ImageButton)findViewById(R.id.imgbtn_id03);
+        ImageButton btn04 = (ImageButton)findViewById(R.id.imgbtn_id04);
+        ImageButton btn05 = (ImageButton)findViewById(R.id.imgbtn_id05);
+        ImageButton btn06 = (ImageButton)findViewById(R.id.imgbtn_id06);
+
+        // Intent渡し用
+        final String noparam = Common.join(noArr, ",");
+
+        btn01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PartySearch.class);
                 // アクティビティ起動
-                //intent.putExtra("KEYWORD", "test");
+                intent.putExtra("NO", noparam);
+                intent.putExtra("BTNNO", "1");
                 startActivity(intent);
             }
         });
 
-        // ボタン押下時に画面遷移 sample
-        ImageButton btn2 = (ImageButton)findViewById(R.id.imgbtn_id02);
-        btn2.setOnClickListener(new View.OnClickListener() {
+        btn02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PartySearch.class);
+                // アクティビティ起動
+                intent.putExtra("NO", noparam);
+                intent.putExtra("BTNNO", "2");
+                startActivity(intent);
+            }
+        });
+
+        btn03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PartySearch.class);
+                // アクティビティ起動
+                intent.putExtra("NO", noparam);
+                intent.putExtra("BTNNO", "3");
+                startActivity(intent);
+            }
+        });
+
+        btn04.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PartySearch.class);
+                // アクティビティ起動
+                intent.putExtra("NO", noparam);
+                intent.putExtra("BTNNO", "4");
+                startActivity(intent);
+            }
+        });
+
+        btn05.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PartySearch.class);
+                // アクティビティ起動
+                intent.putExtra("NO", noparam);
+                intent.putExtra("BTNNO", "5");
+                startActivity(intent);
+            }
+        });
+
+        btn06.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PartySearch.class);
+                // アクティビティ起動
+                intent.putExtra("NO", noparam);
+                intent.putExtra("BTNNO", "6");
+                startActivity(intent);
             }
         });
 
@@ -125,12 +190,18 @@ public class Partyadd extends Activity {
         List<AppInfo> items = new ArrayList<AppInfo>();
         try {
             for (int i = 0; i < cnt; i++) {
-                URL url = new URL(arrtest[i].get(1));
-                istream = url.openStream();
-                Drawable d = Drawable.createFromStream(istream, "webimg");
                 AppInfo bbb = new AppInfo();
                 bbb.setTextData(arrtest[i].get(0));
-                bbb.setImagaData(d);
+                URL url = new URL(arrtest[i].get(1));
+                if (i == 0) {
+                    // リーダースキル
+                    bbb.setImagaData(getResources().getDrawable(R.drawable.leaderskill));
+                } else {
+                    // 覚醒情報
+                    istream = url.openStream();
+                    Drawable d = Drawable.createFromStream(istream, "webimg");
+                    bbb.setImagaData(d);
+                }
                 items.add(bbb);
             }
         } catch (IOException e) {
@@ -148,8 +219,8 @@ public class Partyadd extends Activity {
     private String getLsDesc(Sample2 sample) {
         String rst;
         String[] arr = sample.ls_desc.split(",",0);
-        if (arr.length == 0) {
-            rst = "なし";
+        if (arr.length == 0 || (arr.length == 1 && arr[0] == "")) {
+            rst = "無し";
         } else if (arr.length == 1) {
             rst = arr[0];
         } else {
@@ -166,6 +237,7 @@ public class Partyadd extends Activity {
         Intent intent = getIntent();
         if (intent != null) {
             no = intent.getStringExtra("NO");
+            Log.d("Tag", "No:" + intent.getStringExtra("NO"));
             noArr = no.split(",", 0);
             // 不足している場合は0埋め
             if (noArr.length < 6) {
@@ -181,25 +253,34 @@ public class Partyadd extends Activity {
         return noArr;
     }
 
+    private void setImageButton(int imgbtnId) {
+        setImageButton(imgbtnId, "noimage");
+    }
+
     private void setImageButton(int imgbtnId, String fileName) {
         ImageButton img = (ImageButton)findViewById(imgbtnId);
-
-        // 画像のURL
-        String urlString="http://pazu-test.but.jp/image/" + fileName;
-
         try {
-            //URLクラス
-            URL url = new URL(urlString);
-            //入力ストリームを開く
-            InputStream istream = url.openStream();
+            if (fileName == "noimage") {
+                // ここでNoImage
+                //img.setImageDrawable(R.drawable.moimage);
+                img.setImageResource(R.drawable.noselect);
+            } else {
+                // 画像のURL
+                String urlString="http://pazu-test.but.jp/image/" + fileName;
+                //URLクラス
+                URL url = new URL(urlString);
+                //入力ストリームを開く
+                InputStream istream = url.openStream();
 
-            //画像をDrawableで取得
-            Drawable d = Drawable.createFromStream(istream, "webimg");
+                //画像をDrawableで取得
+                Drawable d = Drawable.createFromStream(istream, "webimg");
 
-            //入力ストリームを閉じる
-            istream.close();
+                //入力ストリームを閉じる
+                istream.close();
 
-            img.setImageDrawable(d);
+                img.setImageDrawable(d);
+            }
+
             android.view.ViewGroup.LayoutParams params = img.getLayoutParams();
             params.height = width / 6;
             params.width = width / 6;

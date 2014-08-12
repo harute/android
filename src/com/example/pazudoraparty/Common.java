@@ -21,4 +21,22 @@ public class Common {
             return false;
         }
     }
+
+    // 文字列JOIN 文字なし判定なし
+    public static String join(String[] strarr, String sepa) {
+        String res = strarr[0];
+        for (int i = 1; i < strarr.length; i++) {
+            res += sepa + strarr[i];
+        }
+        return res;
+    }
+
+    public static String getMergeNO(String base, String point, String after) {
+        String[] arr = base.split(",");
+        if (Integer.parseInt(point) > arr.length) {
+            return base;
+        }
+        arr[Integer.parseInt(point) - 1] = after;
+        return join(arr, ",");
+    }
 }
