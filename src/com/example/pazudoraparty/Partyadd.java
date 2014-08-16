@@ -14,11 +14,13 @@ import com.example.pazudoraparty.R;
 import com.example.pazudoraparty.Sample2;
 import com.example.pazudoraparty.StringResponseHandler;
 import com.example.pazudoraparty.Common;
+import com.example.pazudoraparty.R.drawable;
 import com.google.gson.Gson;
 
 import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -55,14 +57,7 @@ public class Partyadd extends Activity {
         String[] imageStr = getImageFilePathArr(noArr);
 
         getDisplay();
-        /*
-        setImageButton(R.id.imgbtn_id01, "001.png");
-        setImageButton(R.id.imgbtn_id02, "002.png");
-        setImageButton(R.id.imgbtn_id03, "003.png");
-        setImageButton(R.id.imgbtn_id04, "004.png");
-        setImageButton(R.id.imgbtn_id05, "002.png");
-        setImageButton(R.id.imgbtn_id06, "002.png");
-        */
+
         setImageButton(R.id.imgbtn_id01, imageStr[0]);
         setImageButton(R.id.imgbtn_id02, imageStr[1]);
         setImageButton(R.id.imgbtn_id03, imageStr[2]);
@@ -181,6 +176,7 @@ public class Partyadd extends Activity {
             for (Kakusei kakuraw : sample.kakusei) {
                 arrtest[cnt] = new ArrayList<String>();
                 arrtest[cnt].add(kakuraw.desc);
+                arrtest[cnt].add(kakuraw.filename);
                 arrtest[cnt].add(kakuraw.url);
                 cnt++;
             }
@@ -190,19 +186,22 @@ public class Partyadd extends Activity {
         //入力ストリームを開く
         InputStream istream;
         List<AppInfo> items = new ArrayList<AppInfo>();
+        /*
         try {
             for (int i = 0; i < cnt; i++) {
                 AppInfo bbb = new AppInfo();
                 bbb.setTextData(arrtest[i].get(0));
-                URL url = new URL(arrtest[i].get(1));
                 if (i == 0) {
                     // リーダースキル
                     bbb.setImagaData(getResources().getDrawable(R.drawable.leaderskill));
                 } else {
                     // 覚醒情報
+                    URL url = new URL(arrtest[i].get(1));
                     istream = url.openStream();
                     Drawable d = Drawable.createFromStream(istream, "webimg");
-                    bbb.setImagaData(d);
+
+                    // todo ここでarrtest[i].get(1)によって返り値を買えましょう
+                    bbb.setImagaData(getResources().getDrawable(R.drawable.kakusei_04));
                 }
                 items.add(bbb);
             }
@@ -210,6 +209,22 @@ public class Partyadd extends Activity {
             // TODO 自動生成された catch ブロック
             e.printStackTrace();
         }
+        */
+        for (int i = 0; i < cnt; i++) {
+            AppInfo bbb = new AppInfo();
+            bbb.setTextData(arrtest[i].get(0));
+            if (i == 0) {
+                // リーダースキル
+                bbb.setImagaData(getResources().getDrawable(R.drawable.leaderskill));
+            } else {
+                // 覚醒情報
+                // todo 存在しない場合はURLから取るかNoImage
+                int id = getResources().getIdentifier(arrtest[i].get(1), "drawable", getPackageName());
+                bbb.setImagaData(getResources().getDrawable(id));
+            }
+            items.add(bbb);
+        }
+
 
         //adapter = new AppInfoArrayAdapter(this, R.layout.raw, R.id.row_textview1, items);
         AppInfoArrayAdapter adapter = new AppInfoArrayAdapter(this, R.layout.raw, items);
@@ -273,10 +288,6 @@ public class Partyadd extends Activity {
         return noArr;
     }
 
-    private void setImageButton(int imgbtnId) {
-        setImageButton(imgbtnId, "noimage");
-    }
-
     private void setImageButton(int imgbtnId, String fileName) {
         ImageButton img = (ImageButton)findViewById(imgbtnId);
         try {
@@ -337,4 +348,5 @@ class Sample2{
 class Kakusei {
     public String desc;
     public String url;
+    public String filename;
 }
