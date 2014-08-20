@@ -1,26 +1,14 @@
 package com.example.pazudoraparty;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.pazudoraparty.AppInfo;
-import com.example.pazudoraparty.AppInfoArrayAdapter;
-import com.example.pazudoraparty.Http;
-import com.example.pazudoraparty.Kakusei;
-import com.example.pazudoraparty.R;
-import com.example.pazudoraparty.Sample2;
-import com.example.pazudoraparty.StringResponseHandler;
-import com.example.pazudoraparty.Common;
-import com.example.pazudoraparty.R.drawable;
-import com.google.gson.Gson;
-
-import android.R.integer;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -28,11 +16,17 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 public class Partyadd extends Activity {
 
@@ -183,33 +177,8 @@ public class Partyadd extends Activity {
         }
 
         // ここで繰り返し処理
-        //入力ストリームを開く
-        InputStream istream;
         List<AppInfo> items = new ArrayList<AppInfo>();
-        /*
-        try {
-            for (int i = 0; i < cnt; i++) {
-                AppInfo bbb = new AppInfo();
-                bbb.setTextData(arrtest[i].get(0));
-                if (i == 0) {
-                    // リーダースキル
-                    bbb.setImagaData(getResources().getDrawable(R.drawable.leaderskill));
-                } else {
-                    // 覚醒情報
-                    URL url = new URL(arrtest[i].get(1));
-                    istream = url.openStream();
-                    Drawable d = Drawable.createFromStream(istream, "webimg");
 
-                    // todo ここでarrtest[i].get(1)によって返り値を買えましょう
-                    bbb.setImagaData(getResources().getDrawable(R.drawable.kakusei_04));
-                }
-                items.add(bbb);
-            }
-        } catch (IOException e) {
-            // TODO 自動生成された catch ブロック
-            e.printStackTrace();
-        }
-        */
         for (int i = 0; i < cnt; i++) {
             AppInfo bbb = new AppInfo();
             bbb.setTextData(arrtest[i].get(0));
@@ -220,6 +189,7 @@ public class Partyadd extends Activity {
                 // 覚醒情報
                 // todo 存在しない場合はURLから取るかNoImage
                 int id = getResources().getIdentifier(arrtest[i].get(1), "drawable", getPackageName());
+                //Log.d("Tag", String.valueOf(id));
                 bbb.setImagaData(getResources().getDrawable(id));
             }
             items.add(bbb);
@@ -230,6 +200,40 @@ public class Partyadd extends Activity {
         AppInfoArrayAdapter adapter = new AppInfoArrayAdapter(this, R.layout.raw, items);
         listView1.setAdapter(adapter);
 
+        // ここから登録ボタン押下処理
+        Button btn = (Button)findViewById(R.id.button1);
+        btn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+              //テキスト入力を受け付けるビューを作成
+                final EditText editView = new EditText(Partyadd.this);
+                new AlertDialog.Builder(Partyadd.this)
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setTitle("ラベルを入力してください")
+                    //setViewにてビューを設定します。
+                    .setView(editView)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // todo ここでMainActivityにもどる
+                            Partyadd pad = new Partyadd();
+                            pad.setTouroku(editView.getText().toString());
+                           //入力した文字をトースト出力する
+//                            Toast.makeText(Partyadd.this,
+//                                    editView.getText().toString(),
+//                                    Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        }
+                    })
+                    .show();
+            }
+        });
+    }
+
+    /* パーティ情報をローカルに保存する */
+    protected void setTouroku(String label) {
+        Log.d("Tag", "label=" + label);
     }
 
     private String[] getImageFilePathArr(String[] noArr) {
@@ -321,7 +325,6 @@ public class Partyadd extends Activity {
         } catch (Exception e) {
             System.out.println("nuu: "+e);
         }
-
     }
 
     private void getDisplay() {
@@ -337,7 +340,7 @@ public class Partyadd extends Activity {
 }
 
 /*
-* Json文字列をこのクラスに変化するa
+* Json文字列をこのクラスに変化する
 */
 class Sample2{
     public String ls_name;

@@ -97,7 +97,7 @@ public class PartySearch extends Activity implements TextWatcher {
             // リストビューに渡すアダプタを生成します。
             SimpleAdapter adapter2 = new SimpleAdapter(this, retDataList,
                     R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
-                    new int[] {R.id.textView1, R.id.textView2 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
+                    new int[] {R.id.textView1, R.id.textView3 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
 
             // アダプタを設定します。
             listView.setAdapter(adapter2);
@@ -162,7 +162,7 @@ public class PartySearch extends Activity implements TextWatcher {
             // リストビューに渡すアダプタを生成します。
             SimpleAdapter adapter2 = new SimpleAdapter(this, retDataList,
                     R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
-                    new int[] {R.id.textView1, R.id.textView2 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
+                    new int[] {R.id.textView1, R.id.textView3 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
 
             // アダプタを設定します。
             listView.setAdapter(adapter2);
@@ -170,7 +170,7 @@ public class PartySearch extends Activity implements TextWatcher {
             // リストビューに渡すアダプタを生成します。
             SimpleAdapter adapter2 = new SimpleAdapter(this, baseRetDataList,
                     R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
-                    new int[] {R.id.textView1, R.id.textView2 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
+                    new int[] {R.id.textView1, R.id.textView3 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
 
             // アダプタを設定します。
             listView.setAdapter(adapter2);
