@@ -44,8 +44,8 @@ public class PartySearch extends Activity implements TextWatcher {
         Intent intent = getIntent();
         final String beforeIntentNo = intent.getStringExtra("NO");
         final String beforeIntentBtnNo = intent.getStringExtra("BTNNO");
-        Log.d("Tag", "No:" + beforeIntentNo);
-        Log.d("Tag", "Button-No:" + beforeIntentBtnNo);
+        Common.putLogMessage("No:" + beforeIntentNo);
+        Common.putLogMessage("Button-No:" + beforeIntentBtnNo);
 
         // リスナーを仕込むエディットボックス
         this.mEditText = (EditText)findViewById(R.id.editText1);
@@ -90,14 +90,13 @@ public class PartySearch extends Activity implements TextWatcher {
                 data.put("other4", "攻撃 " + sampleRow.attack);
                 data.put("other5", "回復 " + sampleRow.recovery);
                 retDataList.add(data);
-                //Log.d("Tag", "test3");
             }
             baseRetDataList = retDataList;
 
             // リストビューに渡すアダプタを生成します。
             SimpleAdapter adapter2 = new SimpleAdapter(this, retDataList,
                     R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
-                    new int[] {R.id.textView1, R.id.textView3 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
+                    new int[] {R.id.textView001, R.id.textView002 , R.id.textView003, R.id.textView004, R.id.textView005, R.id.textView006});
 
             // アダプタを設定します。
             listView.setAdapter(adapter2);
@@ -111,7 +110,6 @@ public class PartySearch extends Activity implements TextWatcher {
                     data = new HashMap<String, String>();
                     data = (Map<String, String>) list.getItemAtPosition(position);
                     String ret = data.get("no").replaceAll("[^0-9]","");
-                    //Log.d("Tag", String.valueOf(ret));
 
                     // PartyAddに戻る
                     Intent intent = new Intent(getApplicationContext(), Partyadd.class);
@@ -144,7 +142,6 @@ public class PartySearch extends Activity implements TextWatcher {
         if (s.toString() != "") {
             // ここでテキスト変更後の処理
             for (Sample sampleRow : baseSampleList) {
-                //Log.d("tag", "base=" + s.toString());
                 if (sampleRow.name.indexOf(s.toString()) > -1) {
                     data = new HashMap<String, String>();
                     data.put("no", Common.getNo(sampleRow.no, sampleRow.rare));
@@ -153,7 +150,6 @@ public class PartySearch extends Activity implements TextWatcher {
                     data.put("other3", "HP " + sampleRow.hp);
                     data.put("other4", "攻撃 " + sampleRow.attack);
                     data.put("other5", "回復 " + sampleRow.recovery);
-                    //Log.d("tag", "result=" + sampleRow.name);
                     retDataList.add(data);
                 }
             }
@@ -162,7 +158,7 @@ public class PartySearch extends Activity implements TextWatcher {
             // リストビューに渡すアダプタを生成します。
             SimpleAdapter adapter2 = new SimpleAdapter(this, retDataList,
                     R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
-                    new int[] {R.id.textView1, R.id.textView3 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
+                    new int[] {R.id.textView001, R.id.textView002 , R.id.textView003, R.id.textView004, R.id.textView005, R.id.textView006});
 
             // アダプタを設定します。
             listView.setAdapter(adapter2);
@@ -170,7 +166,7 @@ public class PartySearch extends Activity implements TextWatcher {
             // リストビューに渡すアダプタを生成します。
             SimpleAdapter adapter2 = new SimpleAdapter(this, baseRetDataList,
                     R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
-                    new int[] {R.id.textView1, R.id.textView3 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
+                    new int[] {R.id.textView001, R.id.textView002 , R.id.textView003, R.id.textView004, R.id.textView005, R.id.textView006});
 
             // アダプタを設定します。
             listView.setAdapter(adapter2);

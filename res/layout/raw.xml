@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textView001"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -13,12 +13,11 @@
         android:textSize="10sp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView002"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="14sp"  />
-
+        android:textSize="14sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,40 +28,40 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textView003"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/simple_frame"
             android:text="TextView"
-            android:textSize="12sp"
-            android:background="@drawable/simple_frame" />
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textView004"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/simple_frame"
             android:text="TextView"
-            android:textSize="12sp"
-            android:background="@drawable/simple_frame" />
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textView005"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/simple_frame"
             android:text="TextView"
-            android:textSize="12sp"
-            android:background="@drawable/simple_frame" />
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/textView006"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/simple_frame"
             android:text="TextView"
-            android:textSize="12sp"
-            android:background="@drawable/simple_frame" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

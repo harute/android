@@ -12,6 +12,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:paddingLeft="10px"
+    android:maxWidth="30dp"
+    android:maxHeight="30dp"
+    android:adjustViewBounds="true"
+    android:scaleType="centerCrop"
   />
 
   <TextView
@@ -19,7 +23,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:textSize="12sp"
+    android:textSize="10sp"
     android:padding="10dip"
   />
 </LinearLayout>

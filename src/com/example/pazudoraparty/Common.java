@@ -1,5 +1,7 @@
 package com.example.pazudoraparty;
 
+import android.util.Log;
+
 public class Common {
     /* ラベル上部の文字列を生成 */
     public static String getNo(String no, String rare) {
@@ -38,5 +40,10 @@ public class Common {
         }
         arr[Integer.parseInt(point) - 1] = after;
         return join(arr, ",");
+    }
+
+    public static void putLogMessage(String msg) {
+        StackTraceElement[] es = new Exception().getStackTrace();
+        Log.d("Tag", es[1].getClassName() + " " + msg);
     }
 }

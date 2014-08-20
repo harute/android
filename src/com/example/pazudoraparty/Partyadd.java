@@ -142,12 +142,13 @@ public class Partyadd extends Activity {
         // http処理
         Http.Request request = new Http.Request();
         request.url = "https://but-pazu-test.ssl-lolipop.jp/skillSearch.php?leader[0]=" + noArr[0] +
-                      "&leader[1]=" + noArr[1] +
-                      "&member[0]=" + noArr[2] +
-                      "&member[1]=" + noArr[3] +
-                      "&member[2]=" + noArr[4] +
-                      "&member[3]=" + noArr[5];
+                      "&leader[1]=" + noArr[5] +
+                      "&member[0]=" + noArr[1] +
+                      "&member[1]=" + noArr[2] +
+                      "&member[2]=" + noArr[3] +
+                      "&member[3]=" + noArr[4];
         Log.d("Tag", request.url);
+        Common.putLogMessage(request.url);
 
         Http.Response response = Http.requestSync(request, StringResponseHandler.getInstance());
         Sample2 sample = new Sample2();
@@ -189,7 +190,6 @@ public class Partyadd extends Activity {
                 // 覚醒情報
                 // todo 存在しない場合はURLから取るかNoImage
                 int id = getResources().getIdentifier(arrtest[i].get(1), "drawable", getPackageName());
-                //Log.d("Tag", String.valueOf(id));
                 bbb.setImagaData(getResources().getDrawable(id));
             }
             items.add(bbb);
@@ -241,7 +241,6 @@ public class Partyadd extends Activity {
         int i = 0;
         for (String param : noArr) {
             int p = Integer.parseInt(param);
-            Log.d("Tag", String.valueOf(p));
             if (p <= 0) {
                 rst[i] = "noimage";
             } else if (p >= 1000) {
@@ -276,7 +275,8 @@ public class Partyadd extends Activity {
         Intent intent = getIntent();
         if (intent != null) {
             no = intent.getStringExtra("NO");
-            Log.d("Tag", "No:" + intent.getStringExtra("NO"));
+            //Log.d("Tag", "No:" + intent.getStringExtra("NO"));
+            Common.putLogMessage("No:" + intent.getStringExtra("NO"));
             noArr = no.split(",", 0);
             // 不足している場合は0埋め
             if (noArr.length < 6) {
