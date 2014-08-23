@@ -24,8 +24,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 
 /**
@@ -72,6 +72,7 @@ public class Partyadd extends Activity {
         ImageButton btn04 = (ImageButton)findViewById(R.id.imgbtn_id04);
         ImageButton btn05 = (ImageButton)findViewById(R.id.imgbtn_id05);
         ImageButton btn06 = (ImageButton)findViewById(R.id.imgbtn_id06);
+
 
         // Intent渡し用
         final String noparam = Common.join(noArr, ",");
@@ -167,12 +168,25 @@ public class Partyadd extends Activity {
         @SuppressWarnings("unchecked")
         ArrayList<String>[] arrtest = new ArrayList[50];
         arrtest[0] = new ArrayList<String>();
-        //arrtest[0].add(sample.ls_desc.split(",")[0] + "\n" + sample.ls_desc.split(",")[1]);
-        arrtest[0].add(getLsDesc(sample));
-        arrtest[0].add("http://pazu-test.but.jp/image/004.png");
+        //リーダー、フレンドスキル表示部分
+        String[] arr = sample.ls_desc.split(",",0);
+        TextView textLeader = (TextView) findViewById(R.id.TextLeaderSkill);
+        if (arr[0] == "") {
+            textLeader.setText("リーダースキル:なし");
+        } else {
+            textLeader.setText("リーダースキル:" + arr[0]);
+        }
+        TextView textFriend = (TextView) findViewById(R.id.TextFriendSkill);
+        if (arr.length <= 1) {
+            textFriend.setText("フレンドスキル:なし");
+        } else {
+            textFriend.setText("フレンドスキル:" + arr[1]);
+        }
+        //arrtest[0].add(getLsDesc(sample));
+        //arrtest[0].add("http://pazu-test.but.jp/image/004.png");
 
         // 覚醒
-        int cnt = 1;
+        int cnt = 0;
         if (sample.kakusei != null) {
             for (Kakusei kakuraw : sample.kakusei) {
                 arrtest[cnt] = new ArrayList<String>();
@@ -189,15 +203,10 @@ public class Partyadd extends Activity {
         for (int i = 0; i < cnt; i++) {
             AppInfo bbb = new AppInfo();
             bbb.setTextData(arrtest[i].get(0));
-            if (i == 0) {
-                // リーダースキル
-                bbb.setImagaData(getResources().getDrawable(R.drawable.leaderskill));
-            } else {
-                // 覚醒情報
-                // todo 存在しない場合はURLから取るかNoImage
-                int id = getResources().getIdentifier(arrtest[i].get(1), "drawable", getPackageName());
-                bbb.setImagaData(getResources().getDrawable(id));
-            }
+            // 覚醒情報
+            // todo 存在しない場合はURLから取るかNoImage
+            int id = getResources().getIdentifier(arrtest[i].get(1), "drawable", getPackageName());
+            bbb.setImagaData(getResources().getDrawable(id));
             items.add(bbb);
         }
 
@@ -348,10 +357,10 @@ public class Partyadd extends Activity {
             }
 
             android.view.ViewGroup.LayoutParams params = img.getLayoutParams();
-            params.height = width / 6;
-            params.width = width / 6;
+            params.height = width / 7;
+            params.width = width / 7;
 
-            img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            img.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         } catch (Exception e) {
             System.out.println("nuu: "+e);
@@ -371,27 +380,28 @@ public class Partyadd extends Activity {
         height = size.y;
 
     }
+
+    /**
+     * サーバから取得したモンスター情報を格納するためのクラス
+     * <br>https://but-pazu-test.ssl-lolipop.jp/skillSearch.php
+     * @author hide
+     *
+     */
+    class Sample2{
+        public String ls_name;
+        public String ls_desc;
+        public Kakusei[] kakusei;
+    }
+
+    /**
+     * 覚醒情報を格納するためのクラス
+     * @author hide
+     *
+     */
+    class Kakusei {
+        public String desc;
+        public String url;
+        public String filename;
+    }
 }
 
-/**
- * サーバから取得したモンスター情報を格納するためのクラス
- * <br>https://but-pazu-test.ssl-lolipop.jp/skillSearch.php
- * @author hide
- *
- */
-class Sample2{
-    public String ls_name;
-    public String ls_desc;
-    public Kakusei[] kakusei;
-}
-
-/**
- * 覚醒情報を格納するためのクラス
- * @author hide
- *
- */
-class Kakusei {
-    public String desc;
-    public String url;
-    public String filename;
-}

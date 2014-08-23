@@ -12,8 +12,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:paddingLeft="10px"
-    android:maxWidth="30dp"
-    android:maxHeight="30dp"
+    android:maxWidth="15dp"
+    android:maxHeight="15dp"
     android:adjustViewBounds="true"
     android:scaleType="centerCrop"
   />
@@ -23,7 +23,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:textSize="10sp"
+    android:textSize="8sp"
     android:padding="10dip"
   />
 </LinearLayout>

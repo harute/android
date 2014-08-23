@@ -10,12 +10,14 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/TextView01"
+            android:id="@+id/TextLeaderSkill"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="left"
             android:paddingLeft="10dp"
-            android:text="Leader"
-            android:gravity="left" />
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textSize="8sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -23,73 +25,75 @@
 
             <ImageButton
                 android:id="@+id/imgbtn_id01"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:paddingTop="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="5dp"
-                android:scaleType="fitCenter" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="fitCenter"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"/>
 
             <ImageButton
                 android:id="@+id/imgbtn_id02"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:paddingTop="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:scaleType="fitCenter" />
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="fitCenter"
+                android:layout_width="0dp"
+                android:layout_weight="0.5" />
 
             <ImageButton
                 android:id="@+id/imgbtn_id03"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:paddingTop="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:scaleType="fitCenter"  />
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="fitCenter"
+                android:layout_width="0dp"
+                android:layout_weight="0.5" />
 
             <ImageButton
                 android:id="@+id/imgbtn_id04"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:paddingTop="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:scaleType="fitCenter"  />
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="fitCenter"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"  />
 
             <ImageButton
                 android:id="@+id/imgbtn_id05"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:paddingTop="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:scaleType="fitCenter"  />
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="fitCenter"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"  />
 
             <ImageButton
                 android:id="@+id/imgbtn_id06"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:paddingTop="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp"
-                android:scaleType="fitCenter"  />
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"  />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/TextView02"
+            android:id="@+id/TextFriendSkill"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:paddingRight="10dp"
-            android:text="Friend"
-            android:gravity="right" />
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textSize="8sp" />
 
         <ListView
             android:id="@+id/listView1"
