@@ -11,10 +11,11 @@
 
         <TextView
             android:id="@+id/TextView01"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:text="Leader/Friend" />
+            android:text="Leader"
+            android:gravity="left" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -81,6 +82,14 @@
                 android:scaleType="fitCenter"  />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:text="Friend"
+            android:gravity="right" />
 
         <ListView
             android:id="@+id/listView1"

@@ -175,7 +175,7 @@ public class PartySearch extends Activity implements TextWatcher {
 }
 
 /*
-* Json文字列をこのクラスに変化するa
+* Json文字列をこのクラスに変化する
 */
 class Sample{
     public String no;

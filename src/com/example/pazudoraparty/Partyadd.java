@@ -28,6 +28,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+/**
+ * 登録用画面
+ * @author hide
+ *
+ */
 public class Partyadd extends Activity {
 
     int width;
@@ -39,15 +44,16 @@ public class Partyadd extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //StrictModeを設定 penaltyDeathを取り除く
+        // StrictModeを設定 penaltyDeathを取り除く
+        // メインスレッド上からネットワーク通信を行うとandroid.os.Networkonmainthreadexception例外を吐いてクラッシュ
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
 
         // ウィンドウタイトルバー非表示
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.partyadd);
 
-        // Intent受け取り値を収納
-        String[] noArr = getIntentValueNo();
+        // Intent受け取り値を収納(xxx→this)
+        String[] noArr = getIntentValueNo();    // xx,xx,xx,xx,xx,xx
         String[] imageStr = getImageFilePathArr(noArr);
 
         getDisplay();
@@ -231,11 +237,23 @@ public class Partyadd extends Activity {
         });
     }
 
-    /* パーティ情報をローカルに保存する */
+    /**
+     * パーティ情報をローカルに保存する
+     *
+     * @param label さんぷる
+     * @author hide
+     */
     protected void setTouroku(String label) {
         Log.d("Tag", "label=" + label);
     }
 
+    /**
+     * パーティ情報をローカルに保存する
+     *
+     * @param noArr 加工前のモンスターNo配列。必ず6個
+     * @return モンスターの画像にアクセスするためのNoを配列で返却。0埋め処理後。必ず6個
+     * @author hide
+     */
     private String[] getImageFilePathArr(String[] noArr) {
         String[] rst = new String[6];
         int i = 0;
@@ -253,7 +271,11 @@ public class Partyadd extends Activity {
         return rst;
     }
 
-    // リーダスキルの文字列を生成
+    /**
+     * リーダースキルの文字列を生成して返却する
+     * @param sample 覚醒情報を含むモンスター情報一覧
+     * @return リーダースキル文字列
+     */
     private String getLsDesc(Sample2 sample) {
         String rst;
         String[] arr = sample.ls_desc.split(",",0);
@@ -268,7 +290,11 @@ public class Partyadd extends Activity {
         return rst;
     }
 
-    /* Intent[NO]からNo配列の生成して返却する */
+    /**
+     * Intent[NO]からNo配列の生成して返却する
+     * @return　0埋めして6個の文字列配列にして返却する
+     * @author hide
+     */
     private String[] getIntentValueNo() {
         String no;
         String[] noArr  = {};
@@ -292,6 +318,11 @@ public class Partyadd extends Activity {
         return noArr;
     }
 
+    /**
+     * ImageBottunに画像をセットする
+     * @param imgbtnId 対象ボタンのID
+     * @param fileName URLから取得する際のファイル名。存在しない場合はnoimage
+     */
     private void setImageButton(int imgbtnId, String fileName) {
         ImageButton img = (ImageButton)findViewById(imgbtnId);
         try {
@@ -327,6 +358,9 @@ public class Partyadd extends Activity {
         }
     }
 
+    /**
+     * ディスプレイの縦横をクラス変数width, heightにセットする
+     */
     private void getDisplay() {
         WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
         // ディスプレイのインスタンス生成
@@ -339,15 +373,23 @@ public class Partyadd extends Activity {
     }
 }
 
-/*
-* Json文字列をこのクラスに変化する
-*/
+/**
+ * サーバから取得したモンスター情報を格納するためのクラス
+ * <br>https://but-pazu-test.ssl-lolipop.jp/skillSearch.php
+ * @author hide
+ *
+ */
 class Sample2{
     public String ls_name;
     public String ls_desc;
     public Kakusei[] kakusei;
 }
 
+/**
+ * 覚醒情報を格納するためのクラス
+ * @author hide
+ *
+ */
 class Kakusei {
     public String desc;
     public String url;
